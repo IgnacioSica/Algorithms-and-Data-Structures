@@ -1,4 +1,6 @@
 
+import java.util.LinkedList;
+
 public class TNodoTrie {
     
     private static final int CANT_CHR_ABECEDARIO = 26;
@@ -51,7 +53,26 @@ public class TNodoTrie {
                     nodo = nodo.hijos[indice];
             }
             return comparaciones;
-            //return unaPalabra.length();
     }
-
+    
+    public void predecir(String prefijo, LinkedList<String> palabras) {
+        TNodoTrie nodoActual = this;
+        for(int c = 0; c <= prefijo.length(); c++){
+            int indice = prefijo.charAt(c) - 'a';
+            if(nodoActual.hijos[indice] == null)
+                return;
+            nodoActual = nodoActual.hijos[indice];
+        }
+        predecir("", prefijo, palabras, nodoActual);
+    }
+    
+    private void predecir(String s, String prefijo, LinkedList<String> palabras, TNodoTrie nodo) {
+        for(int i = 0; i <= 26; i++){
+            if (nodo.hijos[i] == null)
+                continue;
+            if(nodo.hijos[i].esPalabra)
+                palabras.add(prefijo + s + (char)('a' + i));
+            predecir(s + (char)('a' + i), prefijo, palabras, nodo.hijos[i]);
+        }
+    }
 }
