@@ -5,55 +5,51 @@ import java.util.LinkedList;
 public class TNodoTrie {
     
     private static final int CANT_CHR_ABECEDARIO = 26;
-    private TNodoTrie[] hijos;
+    private final TNodoTrie[] hijos;
     private boolean esPalabra;
 
     public TNodoTrie() {
-            hijos = new TNodoTrie[CANT_CHR_ABECEDARIO];
-            esPalabra = false;
+        hijos = new TNodoTrie[CANT_CHR_ABECEDARIO];
+        esPalabra = false;
     }
 
     public void insertar(String unaPalabra) {
-            TNodoTrie nodo = this;
-            for (int c = 0; c < unaPalabra.length(); c++) {
-                    int indice = unaPalabra.charAt(c) - 'a';
-                    if (nodo.hijos[indice] == null) {
-                            nodo.hijos[indice] = new TNodoTrie();
-                    }
-                    nodo = nodo.hijos[indice];
-            }
-            nodo.esPalabra = true;
+        TNodoTrie nodo = this;
+        for (int c = 0; c < unaPalabra.length(); c++) {
+            int indice = unaPalabra.charAt(c) - 'a';
+            if (nodo.hijos[indice] == null) 
+                nodo.hijos[indice] = new TNodoTrie();
+            nodo = nodo.hijos[indice];
+        }
+        nodo.esPalabra = true;
     }
 
     private void imprimir(String s, TNodoTrie nodo){
-            if (nodo != null) {
-                    if (nodo.esPalabra) {
-                            System.out.println(s);
-                    }
-                    for (int c = 0; c < CANT_CHR_ABECEDARIO; c++) {
-                            if (nodo.hijos[c] != null) {
-                                    imprimir(s + (char) (c + 'a'), nodo.hijos[c]);
-                            }
-                    }
+        if (nodo != null) {
+            if (nodo.esPalabra) 
+                System.out.println(s);
+            for (int c = 0; c < CANT_CHR_ABECEDARIO; c++) {
+                if (nodo.hijos[c] != null) 
+                    imprimir(s + (char) (c + 'a'), nodo.hijos[c]);     
             }
+        }
     }
 
     public void imprimir() {
-            imprimir("", this);
+        imprimir("", this);
     }
 
     public int buscar(String palabra){
-            int comparaciones = 0;
-            TNodoTrie nodo = this;
-            for (int c = 0; c < palabra.length(); c++) {
-                    comparaciones++;
-                    int indice = palabra.charAt(c) - 'a';
-                    if (nodo.hijos[indice] == null) {
-                            return 0;
-                    }
-                    nodo = nodo.hijos[indice];
-            }
-            return comparaciones;
+        int comparaciones = 0;
+        TNodoTrie nodo = this;
+        for (int c = 0; c < palabra.length(); c++) {
+            comparaciones++;
+            int indice = palabra.charAt(c) - 'a';
+            if (nodo.hijos[indice] == null)
+                return 0;
+            nodo = nodo.hijos[indice];
+        }
+        return comparaciones;
     }
     
     public void predecir(String prefijo, LinkedList<String> palabras) {
