@@ -39,4 +39,6 @@ public interface IVertice {
     public TCaminos todosLosCaminos(Comparable etVertDest, TCamino caminoPrevio, TCaminos todosLosCaminos, int largoMaximo);
     
     public boolean tieneCiclo (TCamino unCamino);
+    
+    public void bea(Collection<TVertice> visitados);
 }

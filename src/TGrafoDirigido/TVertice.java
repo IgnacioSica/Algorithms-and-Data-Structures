@@ -179,4 +179,28 @@ public class TVertice<T> implements IVertice {
         
         return false;
     }
+    
+    @Override
+    public void bea(Collection<TVertice> visitados) 
+    {
+        this.setVisitado(true);
+        LinkedList<TVertice> cola = new LinkedList<>();
+        cola.add(this);
+        Comparable tempstr = this.etiqueta;
+        while (!cola.isEmpty()) 
+        {
+            TVertice x = cola.removeFirst();
+            LinkedList<TAdyacencia> linkedAdy = x.getAdyacentes();
+            for (TAdyacencia ady : linkedAdy) 
+            {
+                TVertice verticeAdy = ady.getDestino();
+                if (!verticeAdy.visitado) 
+                {
+                    verticeAdy.setVisitado(true);
+                    tempstr = tempstr.toString() + verticeAdy.etiqueta;
+                    visitados.add(verticeAdy);
+                }
+            }
+        }
+    }
 }
