@@ -1,18 +1,16 @@
-package TGrafoDirigido;
-
+package TGrafo;
 
 public class TAdyacencia implements IAdyacencia {
-   
 
     private final Comparable etiqueta;
     private final double costo;
     private final TVertice destino;
-    
+
     @Override
     public Comparable getEtiqueta() {
         return etiqueta;
     }
- 
+
     @Override
     public double getCosto() {
         return costo;

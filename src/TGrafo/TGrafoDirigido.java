@@ -1,4 +1,4 @@
-package TGrafoDirigido;
+package TGrafo;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -157,8 +157,8 @@ public class TGrafoDirigido implements IGrafoDirigido {
         for (int j = 0; j < etiquetas.size(); j++) {
             Double costoMax = 0d;
             for (int i = 0; i < etiquetas.size(); i++) {
-                if ((Double)costos[i][j] > costoMax) {
-                    costoMax = (Double)costos[i][j];
+                if ((Double) costos[i][j] > costoMax) {
+                    costoMax = (Double) costos[i][j];
                 }
             }
             if (costoMax < costoMaxGrafo) {
@@ -168,7 +168,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
         }
 
         Comparable etiquetaGrafo = "";
-        for (Comparable etiqueta: etiquetas) {
+        for (Comparable etiqueta : etiquetas) {
             if (indice == 0) {
                 etiquetaGrafo = etiqueta;
                 break;
@@ -199,10 +199,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
     /**
      * Método encargado de obtener la excentricidad dado una etiqueta de vertice
      * Retorna la excentricidad del vertice pasado por parametro si este se
-     * encuentra en el grafo Retorna -1 si no se puede conseguir ese vertice o
+     * encuentra en el grafo. Retorna -1 si no se puede conseguir ese vertice o
      * no hay vertices adyacentes
+     *
      * @param etiquetaVertice
-     * @return 
+     * @return
      */
     @Override
     public Comparable obtenerExcentricidad(Comparable etiquetaVertice) {
@@ -218,11 +219,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
 
         Double costoMax = 0d;
         for (int i = 0; i < costos[0].length; i++) {
-            if ((Double)costos[i][indice] > costoMax) {
-                costoMax = (Double)costos[i][indice];
+            if ((Double) costos[i][indice] > costoMax) {
+                costoMax = (Double) costos[i][indice];
             }
         }
-        
+
         return costoMax == Double.MAX_VALUE ? -1 : costoMax;
     }
 
@@ -256,71 +257,74 @@ public class TGrafoDirigido implements IGrafoDirigido {
     public boolean eliminarVertice(Comparable nombreVertice) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Collection<TVertice> bpf() {
         Collection<TVertice> result = new LinkedList<>();
         desvisitarVertices();
-        
-        this.vertices.entrySet().forEach((v) ->{
-            if(!v.getValue().getVisitado())
+
+        this.vertices.entrySet().forEach((v) -> {
+            if (!v.getValue().getVisitado()) {
                 v.getValue().bpf(result);
+            }
         });
-        
+
         return result;
     }
-   
+
     @Override
     public Collection<TVertice> bpf(Comparable etiquetaOrigen) {
         Collection<TVertice> result = new LinkedList<>();
         desvisitarVertices();
-        
+
         TVertice vOrigen = this.buscarVertice(etiquetaOrigen);
-        if(vOrigen != null)
+        if (vOrigen != null) {
             vOrigen.bpf(result);
-        
-        this.vertices.entrySet().forEach((v) ->{
-            if(!v.getValue().getVisitado())
+        }
+
+        this.vertices.entrySet().forEach((v) -> {
+            if (!v.getValue().getVisitado()) {
                 v.getValue().bpf(result);
+            }
         });
-        
+
         return result;
     }
-
 
     @Override
     public Collection<TVertice> bpf(TVertice vertice) {
         Collection<TVertice> result = new LinkedList<>();
         desvisitarVertices();
-        
-        if(vertice != null)
+
+        if (vertice != null) {
             vertice.bpf(result);
-        
-        this.vertices.entrySet().forEach((v) ->{
-            if(!v.getValue().getVisitado())
+        }
+
+        this.vertices.entrySet().forEach((v) -> {
+            if (!v.getValue().getVisitado()) {
                 v.getValue().bpf(result);
+            }
         });
-        
-        return result;    
+
+        return result;
     }
 
     @Override
     public void desvisitarVertices() {
-        this.vertices.entrySet().forEach((v) ->{
+        this.vertices.entrySet().forEach((v) -> {
             v.getValue().setVisitado(false);
-        });    
+        });
     }
-    
-    public void camino(TVertice origen, TVertice destino, TCaminos caminos, TCamino elCamino){
+
+    public void camino(TVertice origen, TVertice destino, TCaminos caminos, TCamino elCamino) {
         origen.setVisitado(true);
         LinkedList<TAdyacencia> adyacencias = origen.getAdyacentes();
-        for(TAdyacencia adyacente : adyacencias){
+        for (TAdyacencia adyacente : adyacencias) {
             elCamino.agregarAdyacencia(adyacente);
-            if(adyacente.getDestino().equals(destino)){
+            if (adyacente.getDestino().equals(destino)) {
                 caminos.agregarCaminos(elCamino.copiar()); //El camino lo copia porque luego voy a modificarlo.
-            }
-            else{
-                if(!adyacente.getDestino().getVisitado()){
+            } else {
+                if (!adyacente.getDestino().getVisitado()) {
                     camino(adyacente.getDestino(), destino, caminos, elCamino);
                 }
             }
@@ -328,36 +332,42 @@ public class TGrafoDirigido implements IGrafoDirigido {
         }
         origen.setVisitado(false);  // Lo desvisito porque desde A capaz puedo acceder desde otro nodo a B.
     }
-    
+
     @Override
     public TCaminos todosLosCaminos(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
-        TCaminos todosLosCaminos = new TCaminos();
-        TVertice v = buscarVertice(etiquetaOrigen);
-        if (v != null) {
-            TCamino caminoPrevio = new TCamino(v);
-            v.todosLosCaminos(etiquetaDestino, caminoPrevio, todosLosCaminos);
-            return todosLosCaminos;
+        TVertice verticeOrigen = buscarVertice(etiquetaOrigen);
+        if (verticeOrigen != null) {
+            return verticeOrigen.todosLosCaminos(etiquetaDestino, new TCamino(verticeOrigen), new TCaminos());
         }
-        return null;
+        return null; // El vertice origen no existe.
     }
-    
+
     @Override
-    public boolean tieneCiclo(){
+    public boolean tieneCiclo() {
         desvisitarVertices();
-        
-        for(TVertice v : this.vertices.values()){
-            if(!v.getVisitado()){
+
+        for (TVertice v : this.vertices.values()) {
+            if (!v.getVisitado()) {
                 TCamino camino = new TCamino(v);
                 v.tieneCiclo(camino);
-                if(v.tieneCiclo(camino))
+                if (v.tieneCiclo(camino)) {
                     return true;
+                }
             }
         }
-        
+
         return false;
     }
-    
-    public Collection<TVertice> bea() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    @Override
+    public Collection<TVertice> bea(Comparable etiquetaOrigen) {
+        LinkedList<TVertice> resultado = new LinkedList<>();
+        TVertice origen = buscarVertice(etiquetaOrigen);
+
+        if (origen != null) {
+            origen.bea(resultado);
+        }
+
+        return resultado;
     }
 }

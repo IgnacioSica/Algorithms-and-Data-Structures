@@ -1,5 +1,4 @@
-package TGrafoDirigido;
-
+package TGrafo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,7 +40,7 @@ public class ManejadorArchivosGenerico {
                 .getResource(nombreCompletoArchivo).getPath();
         return leerArchivo(path, ignoreHeader);
     }
-    
+
     public static String[] leerArchivo(String nombreCompletoArchivo, boolean ignoreHeader) {
         FileReader fr;
         ArrayList<String> listaLineasArchivo = new ArrayList<String>();
@@ -49,7 +48,9 @@ public class ManejadorArchivosGenerico {
             fr = new FileReader(nombreCompletoArchivo);
             BufferedReader br = new BufferedReader(fr);
             String lineaActual = br.readLine();
-            if (ignoreHeader) lineaActual = br.readLine();
+            if (ignoreHeader) {
+                lineaActual = br.readLine();
+            }
             while (lineaActual != null) {
                 listaLineasArchivo.add(lineaActual);
                 lineaActual = br.readLine();

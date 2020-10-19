@@ -1,6 +1,7 @@
 package ClassesAED1;
 
-public class Pair<K, T>{
+public class Pair<K, T> {
+
     private final K element0;
     private final T element1;
 
@@ -9,7 +10,11 @@ public class Pair<K, T>{
         this.element1 = Element1;
     }
 
-    public K getElement0()  { return element0; }
-    
-    public T getElement1()  { return element1; }
+    public K getElement0() {
+        return element0;
+    }
+
+    public T getElement1() {
+        return element1;
+    }
 }

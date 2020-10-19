@@ -1,5 +1,4 @@
-package TGrafoDirigido;
-
+package TGrafo;
 
 public class TArista implements IArista {
 
@@ -13,8 +12,6 @@ public class TArista implements IArista {
         this.costo = costo;
     }
 
-    
-    
     @Override
     public Comparable getEtiquetaOrigen() {
         return etiquetaOrigen;
@@ -45,7 +42,7 @@ public class TArista implements IArista {
         this.costo = costo;
     }
 
-    public TArista aristaInversa (){
-        return new TArista(this.getEtiquetaDestino(), this.getEtiquetaOrigen(),this.getCosto());
+    public TArista aristaInversa() {
+        return new TArista(this.getEtiquetaDestino(), this.getEtiquetaOrigen(), this.getCosto());
     }
 }

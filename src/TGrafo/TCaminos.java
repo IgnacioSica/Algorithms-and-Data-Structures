@@ -1,5 +1,4 @@
-package TGrafoDirigido;
-
+package TGrafo;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -10,19 +9,19 @@ public class TCaminos {// contendrá elementos del tipo TCamino
 
     public TCaminos() {
         Caminos = new LinkedList<>();
-    } 
-    
-    public void agregarCaminos(TCamino nuevoCamino){
+    }
+
+    public void agregarCaminos(TCamino nuevoCamino) {
         Caminos.add(nuevoCamino);
     }
 
     public void imprimir() {
-        for(TCamino camino : Caminos){
+        for (TCamino camino : Caminos) {
             camino.ImprimirEtiquetas();
         }
-    } 
-    
-    public Collection<TCamino> getCaminos(){
+    }
+
+    public Collection<TCamino> getCaminos() {
         return Caminos;
     }
 }

@@ -1,4 +1,4 @@
-package TGrafoDirigido;
+package TGrafo;
 
 import java.util.LinkedList;
 
@@ -13,7 +13,7 @@ public class TCamino {
         this.otrosVertices = new LinkedList<>();
         this.costoTotal = 0.0;
     }
-    
+
     public TVertice getOrigen() {
         return origen;
     }
@@ -25,13 +25,13 @@ public class TCamino {
     public Double getCostoTotal() {
         return costoTotal;
     }
-    
+
     public void ImprimirEtiquetas() {
         System.out.print(origen.getEtiqueta() + ", ");
-        System.out.println(otrosVertices.toString().substring(1, otrosVertices.toString().length()-1));
+        System.out.println(otrosVertices.toString().substring(1, otrosVertices.toString().length() - 1));
     }
-    
-    public String devolverCamino(){
+
+    public String devolverCamino() {
         return origen.getEtiqueta() + ", " + otrosVertices.toString();
     }
 

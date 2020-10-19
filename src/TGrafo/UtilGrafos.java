@@ -1,5 +1,4 @@
-package TGrafoDirigido;
-
+package TGrafo;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class TNodoTrieHashMap {
-    
+
     private boolean esPalabra;
     private final HashMap<Character, TNodoTrieHashMap> hijos;
     private final static int DEFAULTSIZE = 26;

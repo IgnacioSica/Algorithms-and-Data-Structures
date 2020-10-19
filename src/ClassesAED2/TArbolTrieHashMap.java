@@ -2,7 +2,8 @@ package ClassesAED2;
 
 import java.util.LinkedList;
 
-public class TArbolTrieHashMap{
+public class TArbolTrieHashMap {
+
     private TNodoTrieHashMap raiz;
 
     public int insertar(String palabra, int pagina) {

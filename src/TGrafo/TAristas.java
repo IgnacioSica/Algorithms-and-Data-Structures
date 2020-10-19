@@ -1,4 +1,4 @@
-package TGrafoDirigido;
+package TGrafo;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -54,7 +54,7 @@ public class TAristas extends LinkedList<TArista> {
         //---------COMPLETAR ALGORITMO--------
         // para todo u en Vertices U
         // para todo v en Vertices V
-        // tA =buscar (u, v)
+        // tA = buscar (u, v)
         // si tA <> null y tA.costo < costoMin entonces
         // tAMin = tA y costoMin = tA.costo
         // fin para todo v
@@ -74,7 +74,7 @@ public class TAristas extends LinkedList<TArista> {
     }
 
     void insertarAmbosSentidos(Collection<TArista> aristas) {
-        TArista tempArista;
+        //TArista tempArista;
         for (TArista ta : aristas) {
             this.add(ta);
             this.add(ta.aristaInversa());
