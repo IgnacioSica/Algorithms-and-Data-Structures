@@ -14,6 +14,9 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
 
     private int numBp;
     private int numBajo;
+    private int cantidadDescendientes;
+
+    private TVertice predecesor;
 
     public Comparable getEtiqueta() {
         return etiqueta;
@@ -36,6 +39,40 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
 
     public boolean getVisitado() {
         return this.visitado;
+    }
+
+    @Override
+    public int getBacon() {
+        return bacon;
+    }
+
+    @Override
+    public void setBacon(int newBacon) {
+        this.bacon = newBacon;
+    }
+
+    private void setNumero_bp(int i) {
+        numBp = i;
+    }
+
+    private void setNumeroBajo(int i) {
+        numBajo = i;
+    }
+
+    private int getNumero_bp() {
+        return numBp;
+    }
+
+    private int getNumeroBajo() {
+        return numBajo;
+    }
+
+    public TVertice getPredecesor() {
+        return predecesor;
+    }
+
+    private int getCantidadDescendientes() {
+        return cantidadDescendientes;
     }
 
     @Override
@@ -204,16 +241,6 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
         }
     }
 
-    @Override
-    public int getBacon() {
-        return bacon;
-    }
-
-    @Override
-    public void setBacon(int newBacon) {
-        this.bacon = newBacon;
-    }
-
     public int beaBacon(Comparable actor) {
         if (etiqueta.compareTo(actor) == 0) {   //En el caso de que el actor buscado sea Bacon.
             return 0;
@@ -278,19 +305,102 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
         }
     }
 
-    private void setNumero_bp(int i) {
-        numBp = i;
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public void ordenTopologico() {
+        setVisitado(true);
+        LinkedList<TAdyacencia> adyacencias = this.getAdyacentes();
+        for (TAdyacencia ady : adyacencias) {
+            if (!ady.getDestino().getVisitado()) {
+                ady.getDestino().ordenTopologico();
+            }
+        }
+        //setVisitado(false);                                                   //Esta linea hace todos los ordenes topologicos.
+        System.out.println(getEtiqueta());
     }
 
-    private void setNumeroBajo(int i) {
-        numBajo = i;
+    public void caminoMasCorto(Comparable etiquetaDestino) {
+        Queue<TVertice> cola = new LinkedList<>();
+
+        predecesor = null;
+        if (etiquetaDestino.equals(etiqueta)) {
+            return;
+        }
+        cola.add(this);
+
+        while (!cola.isEmpty()) {
+            TVertice primero = cola.poll();
+            primero.setVisitado(true);
+
+            LinkedList<TAdyacencia> adyacencias = primero.getAdyacentes();
+            for (TAdyacencia adyacencia : adyacencias) {
+                TVertice destino = adyacencia.getDestino();
+                if (destino.getEtiqueta().equals(etiquetaDestino)) {
+                    destino.predecesor = primero;
+                    return;
+                }
+                if (!destino.getVisitado()) {
+                    destino.predecesor = primero;
+                    destino.setVisitado(true);
+                    cola.add(destino);
+                }
+            }
+        }
     }
 
-    private int getNumero_bp() {
-        return numBp;
+    public TCamino caminoMenosCostoso(Comparable etiquetaDestino, TCamino caminoActual, TCamino mejorCamino) {
+        setVisitado(true);
+
+        for (TAdyacencia ady : adyacentes) {
+            TVertice destino = ady.getDestino();
+            if (!destino.getVisitado()) {
+                caminoActual.agregarAdyacencia(ady);
+                if (destino.getEtiqueta().equals(etiquetaDestino)) {
+                    if (mejorCamino == null || caminoActual.getCostoTotal() < mejorCamino.getCostoTotal()) {
+                        mejorCamino = caminoActual.copiar();
+                    }
+                }
+                mejorCamino = destino.caminoMenosCostoso(etiquetaDestino, caminoActual, mejorCamino);
+                caminoActual.eliminarAdyacencia(ady);
+            }
+        }
+        setVisitado(false);
+        return mejorCamino;
     }
 
-    private int getNumeroBajo() {
-        return numBajo;
+    public void clasificarArcos(LinkedList<TArista> arcosArbol, LinkedList<TArista> arcosRetroceso, LinkedList<TArista> arcosAvance, LinkedList<TArista> arcosCruzados) {
+        setVisitado(true);
+
+        for (TAdyacencia adyacente : adyacentes) {
+            TVertice vertAdy = adyacente.getDestino();
+            TArista arista = new TArista(this.getEtiqueta(), vertAdy.getEtiqueta(), adyacente.getCosto());
+            if (!vertAdy.getVisitado()) {
+                arcosArbol.add(arista);
+                vertAdy.clasificarArcos(arcosArbol, arcosRetroceso, arcosAvance, arcosCruzados);
+            } else {
+                if (this.getNumero_bp() < vertAdy.getNumero_bp()) {
+                    arcosAvance.add(arista);
+                } else if (this.getNumero_bp() <= (vertAdy.getNumero_bp() + vertAdy.getCantidadDescendientes())) {
+                    arcosRetroceso.add(arista);
+                } else {
+                    arcosCruzados.add(arista);
+                }
+            }
+        }
+    }
+
+    public void bpfConNumero(int[] numerobp) {
+        setVisitado(true);
+        numerobp[0] = numerobp[0] + 1;
+        setNumero_bp(numerobp[0]);
+
+        for (TAdyacencia adyacente : adyacentes) {
+            TVertice vertAdy = adyacente.getDestino();
+            if (!vertAdy.getVisitado()) {
+
+                vertAdy.bpfConNumero(numerobp);
+                cantidadDescendientes += vertAdy.getCantidadDescendientes() + 1;
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import java.util.TreeMap;
 public class TGrafoDirigido implements IGrafoDirigido {
 
     private final Map<Comparable, TVertice> vertices; // vertices del grafo.-
+    protected TAristas lasAristas = new TAristas();
 
     public TGrafoDirigido(final Collection<TVertice> vertices, final Collection<TArista> aristas) {
         this.vertices = new HashMap<>();
@@ -19,6 +20,10 @@ public class TGrafoDirigido implements IGrafoDirigido {
         for (final TArista arista : aristas) {
             insertarArista(arista);
         }
+    }
+
+    public TAristas getLasAristas() {
+        return lasAristas;
     }
 
     /**
@@ -31,6 +36,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
         if ((nomVerticeOrigen != null) && (nomVerticeDestino != null)) {
             final TVertice vertOrigen = buscarVertice(nomVerticeOrigen);
             if (vertOrigen != null) {
+                lasAristas.remove(lasAristas.buscar(nomVerticeOrigen, nomVerticeDestino));
                 return vertOrigen.eliminarAdyacencia(nomVerticeDestino);
             }
         }
@@ -94,6 +100,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
             final TVertice vertOrigen = buscarVertice(arista.getEtiquetaOrigen());
             final TVertice vertDestino = buscarVertice(arista.getEtiquetaDestino());
             if ((vertOrigen != null) && (vertDestino != null)) {
+                lasAristas.add(arista);
                 return vertOrigen.insertarAdyacencia(arista.getCosto(), vertDestino);
             }
         }
@@ -368,5 +375,64 @@ public class TGrafoDirigido implements IGrafoDirigido {
         }
 
         return resultado;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public void ordenacionTopologica(Comparable etiquetaDestino) {
+        desvisitarVertices();
+        TAristas aristas = new TAristas();
+        this.lasAristas.forEach((arista) -> {
+            aristas.add(arista.aristaInversa());
+        });
+        TGrafoNoDirigido grafo = new TGrafoNoDirigido(getVertices().values(), aristas);
+        TVertice v = grafo.buscarVertice(etiquetaDestino);
+        if (v != null) {
+            v.ordenTopologico();
+        }
+    }
+
+    public Collection<TVertice> caminoMasCorto(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
+        LinkedList<TVertice> camino = new LinkedList<>();
+        TVertice origen = buscarVertice(etiquetaOrigen);
+        if (origen != null) {
+            desvisitarVertices();
+            origen.caminoMasCorto(etiquetaDestino);
+        }
+
+        TVertice verticeActual = buscarVertice(etiquetaDestino);
+        while (verticeActual != null) {
+            camino.addFirst(verticeActual);
+            verticeActual = verticeActual.getPredecesor();
+        }
+
+        return camino;
+    }
+
+    public TCamino caminoMenosCostoso(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
+        TCamino caminoActual, mejorCamino = null;
+
+        TVertice origen = buscarVertice(etiquetaOrigen);
+
+        if (etiquetaOrigen.equals(etiquetaDestino)) {
+            return new TCamino(origen);
+        }
+
+        if (origen != null) {
+            desvisitarVertices();
+            caminoActual = new TCamino(origen);
+            mejorCamino = origen.caminoMenosCostoso(etiquetaDestino, caminoActual, mejorCamino);
+        }
+
+        return mejorCamino;
+    }
+
+    public void clasificarArcos(TVertice verticeOrigen, LinkedList<TArista> arcosArbol, LinkedList<TArista> arcosRetroceso, LinkedList<TArista> arcosAvance, LinkedList<TArista> arcosCruzados) {
+        desvisitarVertices();
+        if (verticeOrigen != null) {
+            verticeOrigen.bpfConNumero(new int[1]);
+            desvisitarVertices();
+            verticeOrigen.clasificarArcos(arcosArbol, arcosRetroceso, arcosAvance, arcosCruzados);
+        }
     }
 }

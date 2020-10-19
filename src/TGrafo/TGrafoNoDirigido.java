@@ -5,8 +5,6 @@ import java.util.LinkedList;
 
 public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoNoDirigido, IGrafoKevinBacon {
 
-    protected TAristas lasAristas = new TAristas();
-
     public TGrafoNoDirigido(Collection<TVertice> vertices, Collection<TArista> aristas) {
         super(vertices, aristas);
         lasAristas.insertarAmbosSentidos(aristas);
@@ -18,10 +16,6 @@ public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoNoDirigido
         TArista arInv = new TArista(arista.getEtiquetaDestino(), arista.getEtiquetaOrigen(), arista.getCosto());
         tempbool = (super.insertarArista(arista) && super.insertarArista(arInv));
         return tempbool;
-    }
-
-    public TAristas getLasAristas() {
-        return lasAristas;
     }
 
     @Override
