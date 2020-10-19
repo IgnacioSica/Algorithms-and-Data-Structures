@@ -385,7 +385,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
         this.lasAristas.forEach((arista) -> {
             aristas.add(arista.aristaInversa());
         });
-        TGrafoNoDirigido grafo = new TGrafoNoDirigido(getVertices().values(), aristas);
+        TGrafoDirigido grafo = new TGrafoDirigido(getVertices().values(), aristas);
         TVertice v = grafo.buscarVertice(etiquetaDestino);
         if (v != null) {
             v.ordenTopologico();
