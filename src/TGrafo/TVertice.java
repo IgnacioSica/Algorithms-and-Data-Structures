@@ -309,8 +309,7 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
     
     public void ordenTopologico() {
         setVisitado(true);
-        LinkedList<TAdyacencia> adyacencias = this.getAdyacentes();
-        for (TAdyacencia ady : adyacencias) {
+        for (TAdyacencia ady : this.getAdyacentes()) {
             if (!ady.getDestino().getVisitado()) {
                 ady.getDestino().ordenTopologico();
             }
