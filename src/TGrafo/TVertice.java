@@ -12,6 +12,9 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
     private T datos;
     private int bacon = Integer.MAX_VALUE;
 
+    private int numBp;
+    private int numBajo;
+
     public Comparable getEtiqueta() {
         return etiqueta;
     }
@@ -238,5 +241,56 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
             }
             return -1;
         }
+    }
+
+    public void puntosArticulacion(Collection<TVertice> puntosDeArticulacion, int[] numerobp) {
+        setVisitado(true);
+        numerobp[0]++;
+        setNumero_bp(numerobp[0]);
+        setNumeroBajo(numerobp[0]);
+
+//        int numerobpSiguiente = numerobp[0];
+        LinkedList<TVertice> hijos = new LinkedList<>();
+        for (TAdyacencia adyacente : adyacentes) {
+            TVertice destino = adyacente.getDestino();
+            if (!destino.getVisitado()) {
+                destino.puntosArticulacion(puntosDeArticulacion, numerobp);
+                hijos.add(destino); //Agrego nuevo hijo a la lista.
+                if (destino.getNumeroBajo() < getNumeroBajo()) {
+                    setNumeroBajo(destino.getNumeroBajo());
+                }
+            } else {
+                if (destino.getNumero_bp() < getNumeroBajo()) {
+                    setNumeroBajo(destino.getNumero_bp());
+                }
+            }
+        }
+        if (getNumero_bp() == 1) {
+            if (hijos.size() >= 2) {
+                puntosDeArticulacion.add(this);
+            }
+        } else {
+            for (TVertice v : hijos) {
+                if (v.getNumeroBajo() >= getNumero_bp()) {
+                    puntosDeArticulacion.add(this);
+                }
+            }
+        }
+    }
+
+    private void setNumero_bp(int i) {
+        numBp = i;
+    }
+
+    private void setNumeroBajo(int i) {
+        numBajo = i;
+    }
+
+    private int getNumero_bp() {
+        return numBp;
+    }
+
+    private int getNumeroBajo() {
+        return numBajo;
     }
 }

@@ -56,17 +56,6 @@ public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoNoDirigido
         return grafo;
     }
 
-    /*@Override
-    public Collection<TVertice> bea(Comparable etiquetaOrigen) {
-        LinkedList<TVertice> resultado = new LinkedList<>();
-        TVertice origen = buscarVertice(etiquetaOrigen);
-        
-        if (origen != null)
-            origen.bea(resultado);
-       
-        return resultado;
-    }*/
-
     @Override
     public int numBacon(Comparable actor) {
         desvisitarVertices();
@@ -78,6 +67,16 @@ public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoNoDirigido
     }
 
     LinkedList<TVertice> puntosArticulacion(Comparable etOrigen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.desvisitarVertices();
+
+        LinkedList<TVertice> puntosDeArticulacion = new LinkedList<>();
+
+        TVertice verticeInicio = buscarVertice(etOrigen);
+        int[] numeroBP = {0};
+        if (verticeInicio != null) {
+            verticeInicio.puntosArticulacion(puntosDeArticulacion, numeroBP);
+        }
+        
+        return puntosDeArticulacion;
     }
 }

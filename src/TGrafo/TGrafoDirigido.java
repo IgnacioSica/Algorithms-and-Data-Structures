@@ -349,7 +349,6 @@ public class TGrafoDirigido implements IGrafoDirigido {
         for (TVertice v : this.vertices.values()) {
             if (!v.getVisitado()) {
                 TCamino camino = new TCamino(v);
-                v.tieneCiclo(camino);
                 if (v.tieneCiclo(camino)) {
                     return true;
                 }

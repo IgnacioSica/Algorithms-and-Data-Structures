@@ -52,9 +52,9 @@ public class TCamino {
     }
 
     public TCamino copiar() {
-        TVertice origen = new TVertice(this.getOrigen().getEtiqueta());
-        TCamino copia = new TCamino(origen);
-        origen.getAdyacentes().addAll(this.getOrigen().getAdyacentes());
+        TVertice Origen = new TVertice(this.getOrigen().getEtiqueta());
+        TCamino copia = new TCamino(Origen);
+        Origen.getAdyacentes().addAll(this.getOrigen().getAdyacentes());
         copia.getOtrosVertices().addAll(this.getOtrosVertices());
         return copia;
     }
