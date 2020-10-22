@@ -261,8 +261,23 @@ public class TGrafoDirigido implements IGrafoDirigido {
     }
 
     @Override
-    public boolean eliminarVertice(Comparable nombreVertice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminarVertice(Comparable nombreVertice) {
+        vertices.remove(nombreVertice);
+        lasAristas.forEach((arista) -> {
+            if(arista.etiquetaDestino.equals(nombreVertice))
+                lasAristas.remove(arista);
+            if(arista.etiquetaOrigen.equals(nombreVertice))
+                lasAristas.remove(arista);
+        });
+        
+        vertices.values().forEach((vertice) -> {
+            LinkedList<TAdyacencia> adyacencias = vertice.getAdyacentes();
+            for(TAdyacencia ad : adyacencias){
+                if(ad.getDestino().getEtiqueta().equals(nombreVertice)){
+                    vertice.getAdyacentes().remove(ad);
+                }
+            }
+        });
     }
 
     @Override
@@ -320,6 +335,8 @@ public class TGrafoDirigido implements IGrafoDirigido {
     public void desvisitarVertices() {
         this.vertices.entrySet().forEach((v) -> {
             v.getValue().setVisitado(false);
+            v.getValue().numBajo = 0;
+            v.getValue().numBp = 1;
         });
     }
 

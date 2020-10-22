@@ -12,8 +12,8 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
     private T datos;
     private int bacon = Integer.MAX_VALUE;
 
-    private int numBp;
-    private int numBajo;
+    public int numBp;
+    public int numBajo;
     private int cantidadDescendientes;
 
     private TVertice predecesor;

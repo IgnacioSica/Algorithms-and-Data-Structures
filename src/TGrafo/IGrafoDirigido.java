@@ -29,7 +29,7 @@ public interface IGrafoDirigido {
      * @param nombreVertice
      * @return
      */
-    boolean eliminarVertice(Comparable nombreVertice);
+    void eliminarVertice(Comparable nombreVertice);
 
     /**
      * Metodo encargado de verificar la existencia de una arista. Las etiquetas
