@@ -264,16 +264,18 @@ public class TGrafoDirigido implements IGrafoDirigido {
     public void eliminarVertice(Comparable nombreVertice) {
         vertices.remove(nombreVertice);
         lasAristas.forEach((arista) -> {
-            if(arista.etiquetaDestino.equals(nombreVertice))
+            if (arista.etiquetaDestino.equals(nombreVertice)) {
                 lasAristas.remove(arista);
-            if(arista.etiquetaOrigen.equals(nombreVertice))
+            }
+            if (arista.etiquetaOrigen.equals(nombreVertice)) {
                 lasAristas.remove(arista);
+            }
         });
-        
+
         vertices.values().forEach((vertice) -> {
             LinkedList<TAdyacencia> adyacencias = vertice.getAdyacentes();
-            for(TAdyacencia ad : adyacencias){
-                if(ad.getDestino().getEtiqueta().equals(nombreVertice)){
+            for (TAdyacencia ad : adyacencias) {
+                if (ad.getDestino().getEtiqueta().equals(nombreVertice)) {
                     vertice.getAdyacentes().remove(ad);
                 }
             }
@@ -395,7 +397,6 @@ public class TGrafoDirigido implements IGrafoDirigido {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
     public void ordenacionTopologica(Comparable etiquetaDestino) {
         desvisitarVertices();
         TAristas aristas = new TAristas();

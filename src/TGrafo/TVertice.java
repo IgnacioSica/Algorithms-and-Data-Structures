@@ -306,7 +306,6 @@ public class TVertice<T> implements IVertice, IVerticeKevinBacon {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
     public void ordenTopologico() {
         setVisitado(true);
         for (TAdyacencia ady : this.getAdyacentes()) {

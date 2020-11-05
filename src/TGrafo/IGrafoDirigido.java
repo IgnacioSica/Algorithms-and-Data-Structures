@@ -111,6 +111,6 @@ public interface IGrafoDirigido {
     public TCaminos todosLosCaminos(Comparable etiquetaOrigen, Comparable etiquetaDestino);
 
     public boolean tieneCiclo();
-    
+
     public Collection<TVertice> bea(Comparable etiquetaOrigen);
 }

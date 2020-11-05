@@ -70,7 +70,7 @@ public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoNoDirigido
         if (verticeInicio != null) {
             verticeInicio.puntosArticulacion(puntosDeArticulacion, numeroBP);
         }
-        
+
         return puntosDeArticulacion;
     }
 }
