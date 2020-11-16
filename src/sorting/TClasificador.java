@@ -34,4 +34,19 @@ public class TClasificador {
         return arr;
     }
 
+    int[] bubbleSort(int[] arr) {
+        int n = arr.length;
+        while (n >= 1) {
+            int newN = 0;
+            for (int i = 1; i < n; i++) {
+                if (arr[i - 1] > arr[i]) {
+                    swap(arr, i - 1, i);
+                    newN = i;
+                }
+            }
+            n = newN;
+        }
+        return arr;
+    }
+
 }
