@@ -2,10 +2,10 @@ package sorting;
 
 public class TClasificador {
 
-    private void swap(int[] vector, int pos1, int pos2) {
-        int temp = vector[pos2];
-        vector[pos2] = vector[pos1];
-        vector[pos1] = temp;
+    private void swap(int[] arr, int p1, int p2) {
+        int temp = arr[p2];
+        arr[p2] = arr[p1];
+        arr[p1] = temp;
     }
 
     int[] selectionSort(int[] arr) {
@@ -46,6 +46,14 @@ public class TClasificador {
             }
             n = newN;
         }
+        return arr;
+    }
+    
+    int[] shellSort(int[] arr){
+        return arr;
+    }
+    
+    int[] quickSort(int[] arr){
         return arr;
     }
 
