@@ -12,13 +12,11 @@ public class TClasificador {
         for (int i = 0; i < arr.length - 1; i++) {
             int jMin = i;
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[jMin]) {
+                if (arr[j] < arr[jMin]) 
                     jMin = j;
-                }
             }
-            if (jMin != i) {
+            if (jMin != i) 
                 swap(arr, jMin, i);
-            }
         }
         return arr;
     }
@@ -57,9 +55,8 @@ public class TClasificador {
                 for (int i = gap; i < arr.length; i++) {
                     j = i - gap;
                     while (j >= 0) {
-                        if (arr[j] > arr[j + gap]) {
+                        if (arr[j] > arr[j + gap]) 
                             swap(arr, j, j + gap);
-                        }
                         j -= gap;
                     }
                 }
@@ -67,8 +64,6 @@ public class TClasificador {
         }
         return arr;
     }
-    
-    
     
     int[] quickSort(int[] arr){
         return arr;
