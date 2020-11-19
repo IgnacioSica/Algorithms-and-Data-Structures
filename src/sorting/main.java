@@ -10,6 +10,15 @@ public class main {
         clasif.mergeSort(arr);
         System.out.println("");
         for(int i = 0; i < arr.length; i++)
-            System.out.print(arr[i]+" ");   
+            System.out.print(arr[i]+" "); 
+        
+        String[] str = {"sfasdf","fffgdgfd","bxvbxv","asdffd","fgrgqew","rewq","vbzcx","rtqe","xbvc","heqwtyr"};
+        System.out.println("");
+        for(int i = 0; i < str.length; i++)
+            System.out.print(str[i]+" ");
+        String[] ord = clasif.radixSortSTR(str);
+        System.out.println("");
+        for(int i = 0; i < ord.length; i++)
+            System.out.print(ord[i]+" ");
     }
 }

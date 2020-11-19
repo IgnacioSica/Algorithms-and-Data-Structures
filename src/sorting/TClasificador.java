@@ -2,6 +2,9 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class TClasificador {
 
@@ -180,7 +183,7 @@ public class TClasificador {
         int right = j;
 
         int pivot = findPivot(left, right, arr); // find pivot with left and right. 
-        
+
         if (pivot >= 0) {
             while (left <= right) {
                 while ((arr[left] < pivot) && (left < j)) {
@@ -252,6 +255,86 @@ public class TClasificador {
         }
 
         return arr;
+    }
+
+    public String[] radixSortSTR(String[] arr) {
+        String abc = "0123456789abcdefghijklmnopqrstuvwxyz";
+        LinkedList[] buckets = new LinkedList[abc.length()];
+        LinkedList<String> output = new LinkedList<>();
+        int max = -1;
+
+        for (String n : arr) {
+            output.add(n);
+            if (n.length() > max) {
+                max = n.length();
+            }
+        }
+
+        for (int d = max - 1; d >= 0; d--) {
+            for (int i = 0; i < buckets.length; i++) {
+                buckets[i] = new LinkedList();
+            }
+            for (String elem : output) {
+                Character c = elem.length() > d ? elem.charAt(d) : '0';
+                int indice = abc.indexOf(c);
+                buckets[indice].addLast(elem);
+            }
+            output = new LinkedList();
+            for (LinkedList bucket : buckets) {
+                output.addAll(bucket);
+            }
+        }
+
+        String[] sorted = new String[arr.length];
+        int i = 0;
+        for (String n : output) {
+            sorted[i++] = n;
+        }
+
+        return sorted;
+    }
+
+    private static HashMap<Comparable, Integer> getMap() {
+        HashMap<Comparable, Integer> mapa = new HashMap<>();
+        for (int i = 0; i < 10; i++) {
+            mapa.put(Character.toChars('0' + i)[0], i);
+        }
+        for (int i = 0; i < 26; i++) {
+            mapa.put(Character.toChars('a' + i)[0], i + 10);
+        }
+        return mapa;
+    }
+
+    public String[] radixSortSTRM(String[] arr, Map<Comparable, Integer> map) {
+        LinkedList[] buckets = new LinkedList[map.size()];
+        LinkedList<String> output = new LinkedList<>();
+        int max = -1;
+        for (String n : arr) {
+            output.add(n);
+            if (n.length() > max) {
+                max = n.length();
+            }
+        }
+        for (int d = max - 1; d >= 0; d--) {
+            for (int i = 0; i < buckets.length; i++) {
+                buckets[i] = new LinkedList();
+            }
+            for (String elem : output) {
+                Character c = elem.length() > d ? elem.charAt(d) : '0';
+                int indice = map.get(c);
+                buckets[indice].addLast(elem);
+            }
+            output = new LinkedList();
+            for (LinkedList bucket : buckets) {
+                output.addAll(bucket);
+            }
+        }
+        String[] sorted = new String[arr.length];
+        int i = 0;
+        for (String n : output) {
+            sorted[i++] = n;
+        }
+        return sorted;
     }
 
     int[] mergeSort(int[] arr) {
