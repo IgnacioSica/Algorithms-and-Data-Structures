@@ -50,11 +50,47 @@ public class TClasificador {
     }
     
     int[] shellSort(int[] arr){
+        int j;
+        int[] gaps = new int[]{3223, 358, 51, 10, 3, 1};
+        for (int gap : gaps) {
+            if (gap <= (arr.length / 2)) {
+                for (int i = gap; i < arr.length; i++) {
+                    j = i - gap;
+                    while (j >= 0) {
+                        if (arr[j] > arr[j + gap]) {
+                            swap(arr, j, j + gap);
+                        }
+                        j -= gap;
+                    }
+                }
+            }
+        }
         return arr;
     }
+    
+    
     
     int[] quickSort(int[] arr){
         return arr;
     }
-
+    
+    int[] countingSort(int[] arr){
+        return arr;
+    }
+    
+    int[] heapSort(int[] arr){
+        return arr;
+    }
+    
+    int[] bucketSort(int[] arr){
+        return arr;
+    }
+    
+    int[] radixSort(int[] arr){
+        return arr;
+    }
+    
+    int[] mergeSort(int[] arr){
+        return arr;
+    }
 }
