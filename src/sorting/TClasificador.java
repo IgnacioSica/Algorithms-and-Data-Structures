@@ -126,9 +126,46 @@ public class TClasificador {
     }
     
     int[] heapSort(int[] arr) {
+        int n = arr.length;
+        
+        for (int i = (n - 1) / 2; i >= 0; i--) {
+            heapify(arr, i, n - 1);
+        }
+        
+        for (int i = n - 1; i > 0; i--) {
+            swap(arr, 0, i);
+            heapify(arr, 0, i - 1);
+        }
+        
         return arr;
     }
     
+     private void heapify(int[] arr, int first, int last) {
+        if (first < last) {
+            int r = first;
+            while (r <= last / 2) {
+                if (last == 2 * r) {
+                    if (arr[r] < arr[r * 2]) {
+                        swap(arr, r, 2 * r);
+                    }
+                    r = last;
+                } else {
+                    int swapPosition;
+                    if (arr[2 * r] > arr[2 * r + 1]) {
+                        swapPosition = 2 * r;
+                    } else {
+                        swapPosition = 2 * r + 1;
+                    }
+                    if (arr[r] < arr[swapPosition]) {
+                        swap(arr, r, swapPosition);
+                        r = swapPosition;
+                    } else {
+                        r = last;
+                    }
+                }
+            }
+        }
+    }
     
     int[] quickSort(int[] arr) {
         return arr;
