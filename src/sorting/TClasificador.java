@@ -254,11 +254,11 @@ public class TClasificador {
     }
 
     int[] mergeSort(int[] arr) {
-        mergesort(arr, 0, arr.length-1);
+        mergesort(arr, 0, arr.length - 1);
         return arr;
     }
-    
-    private void mergesort(int[] arr, int l, int r){
+
+    private void mergesort(int[] arr, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -268,7 +268,7 @@ public class TClasificador {
             merge(arr, l, m, r);
         }
     }
-    
+
     private void merge(int arr[], int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
