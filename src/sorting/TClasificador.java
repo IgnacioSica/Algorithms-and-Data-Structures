@@ -54,7 +54,7 @@ public class TClasificador {
 
     int[] shellSort(int[] arr) {
         int j;
-        int[] gaps = new int[]{3223, 358, 51, 10, 3, 1};
+        int[] gaps = new int[]{3223, 301, 132, 57, 23, 10, 4, 1};
         for (int gap : gaps) {
             if (gap <= (arr.length / 2)) {
                 for (int i = gap; i < arr.length; i++) {
@@ -179,7 +179,8 @@ public class TClasificador {
         int left = i;
         int right = j;
 
-        int pivot = findPivot(left, right, arr);
+        int pivot = findPivot(left, right, arr); // find pivot with left and right. 
+        
         if (pivot >= 0) {
             while (left <= right) {
                 while ((arr[left] < pivot) && (left < j)) {
