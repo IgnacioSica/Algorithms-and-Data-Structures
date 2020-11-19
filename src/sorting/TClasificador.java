@@ -74,27 +74,31 @@ public class TClasificador {
     int[] countingSort(int[] arr) {
         int k = 0;
         int n = arr.length;
-        
-        for (int a : arr) 
+
+        for (int a : arr) {
             k = k > a ? k : a;
+        }
 
         int[] count = new int[k + 1];
 
-        for (int x : arr) 
+        for (int x : arr) {
             ++count[x];
-
-        for (int i = 1; i <= k; ++i) 
-            count[i] += count[i - 1];
-        
-        int[] output = new int[n];
-        
-        for (int i = n - 1; i >= 0; i--) { 
-            output[count[arr[i]] - 1] = arr[i]; 
-            --count[arr[i]]; 
         }
-        
-        for (int i = 0; i < n; ++i) 
+
+        for (int i = 1; i <= k; ++i) {
+            count[i] += count[i - 1];
+        }
+
+        int[] output = new int[n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            output[count[arr[i]] - 1] = arr[i];
+            --count[arr[i]];
+        }
+
+        for (int i = 0; i < n; ++i) {
             arr[i] = output[i];
+        }
 
         return arr;
     }
@@ -102,45 +106,44 @@ public class TClasificador {
     int[] bucketSort(int[] arr) {
         int n = arr.length;
         ArrayList<Integer>[] bucket = new ArrayList[n];
-        
-        for (int i = 0; i < n; i++)
+
+        for (int i = 0; i < n; i++) {
             bucket[i] = new ArrayList<>();
-        
-        for (int i = 0; i < n; i++) 
+        }
+
+        for (int i = 0; i < n; i++) {
             bucket[arr[i]].add(arr[i]);
-        
-        for (int i = 0; i < n; i++) 
+        }
+
+        for (int i = 0; i < n; i++) {
             Collections.sort((bucket[i]));
-    
+        }
+
         int index = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0, size = bucket[i].size(); j < size; j++) {
-            arr[index++] = bucket[i].get(j);
+                arr[index++] = bucket[i].get(j);
             }
         }
         return arr;
     }
 
-    int[] radixSort(int[] arr) {
-        return arr;
-    }
-    
     int[] heapSort(int[] arr) {
         int n = arr.length;
-        
+
         for (int i = (n - 1) / 2; i >= 0; i--) {
             heapify(arr, i, n - 1);
         }
-        
+
         for (int i = n - 1; i > 0; i--) {
             swap(arr, 0, i);
             heapify(arr, 0, i - 1);
         }
-        
+
         return arr;
     }
-    
-     private void heapify(int[] arr, int first, int last) {
+
+    private void heapify(int[] arr, int first, int last) {
         if (first < last) {
             int r = first;
             while (r <= last / 2) {
@@ -166,9 +169,55 @@ public class TClasificador {
             }
         }
     }
-    
-    int[] quickSort(int[] arr) {
+
+    int[] radixSort(int[] arr) {
         return arr;
+    }
+
+    int[] quickSort(int[] arr) {
+        quicksort(arr, 0, arr.length - 1);
+        return arr;
+    }
+
+    private void quicksort(int[] arr, int i, int j) {
+        int left = i;
+        int right = j;
+
+        int pivot = findPivot(left, right, arr);
+        if (pivot >= 0) {
+            while (left <= right) {
+                while ((arr[left] < pivot) && (left < j)) {
+                    left++;
+                }
+                while ((pivot < arr[right]) && (right > i)) {
+                    right--;
+                }
+                if (left <= right) {
+                    swap(arr, right, left);
+                    left++;
+                    right--;
+                }
+            }
+            if (i < right) {
+                quicksort(arr, i, left - 1);
+            }
+            if (left < j) {
+                quicksort(arr, left, j);
+            }
+        }
+    }
+
+    protected int findPivot(int i, int j, int[] arr) {
+        int b = arr[(j + i) / 2];
+        int a = arr[i];
+        int c = arr[j];
+        if ((a - b * c - a) >= 0) {
+            return a;
+        } else if ((b - a * c - b) >= 0) {
+            return b;
+        } else {
+            return c;
+        }
     }
 
     int[] mergeSort(int[] arr) {

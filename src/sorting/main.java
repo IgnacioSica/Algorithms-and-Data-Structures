@@ -7,11 +7,9 @@ public class main {
         int[] arr = gdg.generarDatosAleatorios(150);
         for(int i = 0; i < arr.length; i++)
             System.out.print(arr[i]+" ");
-        clasif.bucketSort(arr);
+        clasif.heapSort(arr);
         System.out.println("");
         for(int i = 0; i < arr.length; i++)
-            System.out.print(arr[i]+" ");
-        
-        int[] count = new int[10];   
+            System.out.print(arr[i]+" ");   
     }
 }
