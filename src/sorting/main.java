@@ -7,7 +7,7 @@ public class main {
         int[] arr = gdg.generarDatosAleatorios(1500);
         for(int i = 0; i < arr.length; i++)
             System.out.print(arr[i]+" ");
-        clasif.mergeSort(arr);
+        clasif.bucketSort(arr);
         System.out.println("");
         for(int i = 0; i < arr.length; i++)
             System.out.print(arr[i]+" "); 

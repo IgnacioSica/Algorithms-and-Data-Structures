@@ -108,27 +108,45 @@ public class TClasificador {
 
     int[] bucketSort(int[] arr) {
         int n = arr.length;
-        ArrayList<Integer>[] bucket = new ArrayList[n];
+        ArrayList<Integer>[] bucket = new ArrayList[10];
 
-        for (int i = 0; i < n; i++) {
+        int k = 0;
+        for (int a : arr) {
+            k = k > a ? k : a;
+        }
+        
+        int range = getBSRange(k);
+        
+        for (int i = 0; i < 10; i++) {
             bucket[i] = new ArrayList<>();
         }
 
         for (int i = 0; i < n; i++) {
-            bucket[arr[i]].add(arr[i]);
+            bucket[getMSD(arr[i], range)].add(arr[i]);
         }
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < 10; i++) {
             Collections.sort((bucket[i]));
         }
 
         int index = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0, size = bucket[i].size(); j < size; j++) {
                 arr[index++] = bucket[i].get(j);
             }
         }
         return arr;
+    }
+    
+    private int getBSRange(int k){
+        int div = 1;
+        for(int i = 0; i < String.valueOf(k).length(); i++)
+            div *= 10;
+        return div;
+    }
+    
+    private int getMSD (int num, int div){
+        return num / div;
     }
 
     int[] heapSort(int[] arr) {
