@@ -170,10 +170,6 @@ public class TClasificador {
         }
     }
 
-    int[] radixSort(int[] arr) {
-        return arr;
-    }
-
     int[] quickSort(int[] arr) {
         quicksort(arr, 0, arr.length - 1);
         return arr;
@@ -208,16 +204,49 @@ public class TClasificador {
     }
 
     protected int findPivot(int i, int j, int[] arr) {
-        int b = arr[(j + i) / 2];
-        int a = arr[i];
-        int c = arr[j];
-        if ((a - b * c - a) >= 0) {
-            return a;
-        } else if ((b - a * c - b) >= 0) {
-            return b;
-        } else {
-            return c;
+        return arr[(i + j) / 2];
+    }
+
+    int[] radixSort(int[] arr) {
+        int k = 0;
+        int n = arr.length;
+
+        for (int a : arr) {
+            k = k > a ? k : a;
         }
+
+        for (int place = 1; k / place > 0; place *= 10) {
+            countingSort(arr, n, place);
+        }
+
+        return arr;
+    }
+
+    int[] countingSort(int[] arr, int size, int place) {
+        int k = 0;
+
+        for (int a : arr) 
+            k = k > a ? k : a;
+
+        int[] count = new int[k + 1];
+
+        for (int x : arr) 
+            ++count[(x / place) % 10];
+
+        for (int i = 1; i <= k; ++i) 
+            count[i] += count[i - 1];
+
+        int[] output = new int[size];
+
+        for (int i = size - 1; i >= 0; i--) {
+            output[count[(arr[i] / place) % 10] - 1] = arr[i];
+            --count[(arr[i] / place) % 10];
+        }
+
+        for (int i = 0; i < size; ++i) 
+            arr[i] = output[i];   
+
+        return arr;
     }
 
     int[] mergeSort(int[] arr) {
