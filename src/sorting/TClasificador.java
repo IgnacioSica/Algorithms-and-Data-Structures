@@ -225,16 +225,19 @@ public class TClasificador {
     int[] countingSort(int[] arr, int size, int place) {
         int k = 0;
 
-        for (int a : arr) 
+        for (int a : arr) {
             k = k > a ? k : a;
+        }
 
         int[] count = new int[k + 1];
 
-        for (int x : arr) 
+        for (int x : arr) {
             ++count[(x / place) % 10];
+        }
 
-        for (int i = 1; i <= k; ++i) 
+        for (int i = 1; i <= k; ++i) {
             count[i] += count[i - 1];
+        }
 
         int[] output = new int[size];
 
@@ -243,13 +246,69 @@ public class TClasificador {
             --count[(arr[i] / place) % 10];
         }
 
-        for (int i = 0; i < size; ++i) 
-            arr[i] = output[i];   
+        for (int i = 0; i < size; ++i) {
+            arr[i] = output[i];
+        }
 
         return arr;
     }
 
     int[] mergeSort(int[] arr) {
+        mergesort(arr, 0, arr.length-1);
         return arr;
+    }
+    
+    private void mergesort(int[] arr, int l, int r){
+        if (l < r) {
+            int m = (l + r) / 2;
+
+            mergesort(arr, l, m);
+            mergesort(arr, m + 1, r);
+
+            merge(arr, l, m, r);
+        }
+    }
+    
+    private void merge(int arr[], int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+
+        int L[] = new int[n1];
+        int M[] = new int[n2];
+
+        for (int i = 0; i < n1; i++) {
+            L[i] = arr[p + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            M[j] = arr[q + 1 + j];
+        }
+
+        int i, j, k;
+        i = 0;
+        j = 0;
+        k = p;
+
+        while (i < n1 && j < n2) {
+            if (L[i] <= M[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = M[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            arr[k] = M[j];
+            j++;
+            k++;
+        }
     }
 }
