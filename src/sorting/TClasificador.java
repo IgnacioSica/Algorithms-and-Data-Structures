@@ -135,6 +135,7 @@ public class TClasificador {
                 arr[index++] = bucket[i].get(j);
             }
         }
+        
         return arr;
     }
     
